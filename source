@@ -1,0 +1,267 @@
+--Made by redzii#0016
+
+local ScreenGui = Instance.new("ScreenGui")
+local main = Instance.new("Frame")
+local script1 = Instance.new("TextButton")
+local script2 = Instance.new("TextButton")
+local script3 = Instance.new("TextButton")
+local script4 = Instance.new("TextButton")
+local script5 = Instance.new("TextButton")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local close = Instance.new("TextButton")
+local openmain = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+
+main.Name = "main"
+main.Parent = ScreenGui
+main.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+main.BorderColor3 = Color3.fromRGB(178, 34, 34)
+main.Position = UDim2.new(0.0104244342, 0, 0.48220858, 0)
+main.Size = UDim2.new(0, 295, 0, 388)
+main.Visible = false
+main.Active = true
+main.Draggable = true
+
+script1.Name = "script1"
+script1.Parent = main
+script1.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+script1.BorderColor3 = Color3.fromRGB(178, 34, 34)
+script1.Position = UDim2.new(0.0553772338, 0, 0.164679915, 0)
+script1.Size = UDim2.new(0, 265, 0, 50)
+script1.Font = Enum.Font.TitilliumWeb
+script1.Text = "Owl Hub"
+script1.TextColor3 = Color3.fromRGB(178, 34, 34)
+script1.TextSize = 46.000
+script1.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))();
+end)
+
+script2.Name = "script2"
+script2.Parent = main
+script2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+script2.BorderColor3 = Color3.fromRGB(178, 34, 34)
+script2.Position = UDim2.new(0.0527434573, 0, 0.312813073, 0)
+script2.Size = UDim2.new(0, 265, 0, 50)
+script2.Font = Enum.Font.TitilliumWeb
+script2.Text = "Dark Hub"
+script2.TextColor3 = Color3.fromRGB(178, 34, 34)
+script2.TextSize = 46.000
+script2.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/RandomAdamYT/DarkHub/master/Init"))();
+end)
+
+
+script3.Name = "script3"
+script3.Parent = main
+script3.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+script3.BorderColor3 = Color3.fromRGB(178, 34, 34)
+script3.Position = UDim2.new(0.0527434573, 0, 0.459595829, 0)
+script3.Size = UDim2.new(0, 265, 0, 50)
+script3.Font = Enum.Font.TitilliumWeb
+script3.Text = "Auto Clicker"
+script3.TextColor3 = Color3.fromRGB(178, 34, 34)
+script3.TextSize = 46.000
+script3.MouseButton1Down:Connect(function()
+	--// Credits \\--
+	--[[ Ezpi#0474 - Creator of this script ]]--
+
+	--// Services \\--
+	local CoreGui = game:GetService("CoreGui")
+	local Players = game:GetService("Players")
+	local VirtualInputManager = game:GetService("VirtualInputManager")
+
+	--// Variables \\--
+	local Player = Players.LocalPlayer
+	local Enabled = false
+	local Mouse = Player:GetMouse()
+	local X, Y = 0, 0
+	local LastC = Color3.new(1, 0, 0)
+	local LastU = tick()
+
+	--// Exploit Fix \\--
+	if not pcall(function() return syn.protect_gui end) then
+		syn = {}
+		syn.protect_gui = function(A_1)
+			A_1.Parent = CoreGui
+		end
+	end
+
+	--// UI Library \\--
+	local Library = loadstring(game:HttpGetAsync('https://pastebin.com/raw/edJT9EGX'))()
+	local Window = Library:CreateWindow("autoclicker by redzii")
+	Enabled_1 = Window:AddColor({
+		text = 'Status:',
+		flag = "redzii_1",
+		color = Color3.new(1, 0, 0),
+		callback = function(A_1)
+			-- "Enabled" Color
+			local NewColor = Color3.new(0, 1, 0)
+			if Enabled == false then
+				NewColor = Color3.new(1, 0, 0)
+			end
+			if NewColor ~= Last or A_1 ~= NewColor then
+				Last = NewColor
+				Enabled_1:SetColor(NewColor)
+			end
+		end
+	})
+	Window:AddBind({
+		text = 'Toggle',
+		callback = function()
+			-- Toggle
+			Enabled = not Enabled
+			-- "Enabled" Color
+			local NewColor = Color3.new(0, 1, 0)
+			if Enabled == false then
+				NewColor = Color3.new(1, 0, 0)
+			end
+			if NewColor ~= Last then
+				Last = NewColor
+				Enabled_1:SetColor(NewColor)
+			end
+			-- Click Position
+			if Enabled then
+				-- Update Mouse Pos
+				X, Y = Mouse.X, Mouse.Y + 10
+				-- Update Box
+				Box_1:SetValue()
+			else
+				X, Y = 0, 0
+				Box_1:SetValue()
+			end
+			-- AutoClick
+			while Enabled do
+				VirtualInputManager:SendMouseButtonEvent(X, Y, 0, true, game, 1)
+				VirtualInputManager:SendMouseButtonEvent(X, Y, 0, false, game, 1)
+				wait(Library.flags.Interval)
+			end
+		end
+	})
+	Window:AddSlider({
+		text = 'Interval',
+		min = 0.01,
+		max = 2,
+		value = 1,
+		float = 0.01
+	})
+	Box_1 = Window:AddBox({
+		text = "AutoClick Position:",
+		value = "X: " .. X .. ", Y: " .. Y,
+		callback = function()
+			if tick()-LastU > 0.1 then
+				LastU = tick()
+				Box_1:SetValue("X: " .. X .. ", Y: " .. Y)
+			end
+		end
+	})
+	Library:Init()
+end)
+
+script4.Name = "script4"
+script4.Parent = main
+script4.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+script4.BorderColor3 = Color3.fromRGB(178, 34, 34)
+script4.Position = UDim2.new(0.05537723, 0, 0.611688256, 0)
+script4.Size = UDim2.new(0, 265, 0, 50)
+script4.Font = Enum.Font.TitilliumWeb
+script4.Text = "Unnamed ESP"
+script4.TextColor3 = Color3.fromRGB(178, 34, 34)
+script4.TextSize = 46.000
+script4.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet'https://ic3w0lf.xyz/rblx/protoesp.lua')()
+end)
+
+script5.Name = "script5"
+script5.Parent = main
+script5.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+script5.BorderColor3 = Color3.fromRGB(178, 34, 34)
+script5.Position = UDim2.new(0.0527434573, 0, 0.760770082, 0)
+script5.Size = UDim2.new(0, 265, 0, 50)
+script5.Font = Enum.Font.TitilliumWeb
+script5.Text = "Infinite Yield FE"
+script5.TextColor3 = Color3.fromRGB(178, 34, 34)
+script5.TextSize = 46.000
+script5.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+Frame.Parent = main
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderColor3 = Color3.fromRGB(178, 34, 34)
+Frame.Position = UDim2.new(-0.00154471397, 0, -0.00666999817, 0)
+Frame.Size = UDim2.new(0, 296, 0, 57)
+
+TextLabel.Parent = main
+TextLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextLabel.BorderColor3 = Color3.fromRGB(30, 30, 30)
+TextLabel.Position = UDim2.new(0.0527434461, 0, -0.00233334396, 0)
+TextLabel.Size = UDim2.new(0, 265, 0, 50)
+TextLabel.Font = Enum.Font.TitilliumWeb
+TextLabel.Text = "Cacik GUI"
+TextLabel.TextColor3 = Color3.fromRGB(178, 34, 34)
+TextLabel.TextSize = 70.000
+
+close.Name = "close"
+close.Parent = main
+close.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+close.BorderColor3 = Color3.fromRGB(178, 34, 34)
+close.Position = UDim2.new(0.0509567522, 0, 0.891274989, 0)
+close.Size = UDim2.new(0, 266, 0, 35)
+close.Font = Enum.Font.TitilliumWeb
+close.Text = "CLOSE"
+close.TextColor3 = Color3.fromRGB(178, 34, 34)
+close.TextSize = 46.000
+close.MouseButton1Down:Connect(function()
+	openmain.Visible = true
+	main.Visible = false
+end)
+
+openmain.Name = "openmain"
+openmain.Parent = ScreenGui
+openmain.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+openmain.BorderColor3 = Color3.fromRGB(178, 34, 34)
+openmain.Position = UDim2.new(0.0223380495, 0, 0.419631898, 0)
+openmain.Size = UDim2.new(0, 264, 0, 41)
+openmain.Active = true
+openmain.Draggable = true
+
+TextButton.Parent = openmain
+TextButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextButton.BorderColor3 = Color3.fromRGB(178, 34, 34)
+TextButton.Size = UDim2.new(0, 264, 0, 41)
+TextButton.Font = Enum.Font.TitilliumWeb
+TextButton.Text = "OPEN"
+TextButton.TextColor3 = Color3.fromRGB(178, 34, 34)
+TextButton.TextSize = 52.000
+TextButton.Draggable = true
+TextButton.MouseButton1Down:Connect(function()
+	main.Visible = true
+	openmain.Visible = false
+	
+	local function UEER_fake_script() -- main.notification 
+		local script = Instance.new('LocalScript', main)
+
+		game.StarterGui:SetCore("SendNotification",{
+			Title = "Cacik GUI Injected !";
+			Text = "Have Fun ^-^";
+			Duration = 7;	
+		})
+		game.StarterGui:SetCore("SendNotification",{
+			Title = "Anti AFK Enabled";
+			Text = "...";
+			Duration = 4;
+
+		})
+	end
+	coroutine.wrap(UEER_fake_script)()
+	
+	local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.ClientMain.Replications.Workers.WalkDummy)
+	setconstant(Module,34,function()
+		game:GetService("RunService").Heartbeat:Wait()
+	end)
+end)
