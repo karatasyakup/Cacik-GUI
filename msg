@@ -19,4 +19,3 @@ local function UEER_fake_script() -- main.notification
 	setconstant(Module,34,function()
 		game:GetService("RunService").Heartbeat:Wait()
 	end)
-end)
