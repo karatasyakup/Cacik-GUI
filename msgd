@@ -2,7 +2,7 @@ local function UEER_fake_script() -- main.notification
 		local script = Instance.new('LocalScript', main)
 
 		game.StarterGui:SetCore("SendNotification",{
-			Title = "Cacik GUI Injected !";
+			Title = "Cacik V.2.0 !";
 			Text = "Have Fun ^-^";
 			Duration = 7;	
 		})
